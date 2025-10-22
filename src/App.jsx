@@ -19,6 +19,13 @@ export default function App() {
     setTurn(turn === "X" ? "O" : "X");
   };
 
+  const handleReset = () => {
+    setSquares(Array(9).fill(null));
+    setTurn("X");
+  };
+
+  const gameStarted = squares.some((square) => square !== null);
+
   return (
     <main className="w-screen h-screen flex justify-center items-center bg-gray-900">
       <div className="flex flex-col items-center gap-6">
@@ -28,23 +35,36 @@ export default function App() {
         </header>
 
         <div className="relative grid grid-cols-3 w-fit gap-0">
-        {/* Horizontal lines */}
-        <div className="absolute left-0 right-0 h-1 bg-purple-500 top-[calc(33.333%-0.125rem)]" />
-        <div className="absolute left-0 right-0 h-1 bg-purple-500 top-[calc(66.666%-0.125rem)]" />
+          {/* Horizontal lines */}
+          <div className="absolute left-0 right-0 h-1 bg-purple-500 top-[calc(33.333%-0.125rem)]" />
+          <div className="absolute left-0 right-0 h-1 bg-purple-500 top-[calc(66.666%-0.125rem)]" />
 
-        {/* Vertical lines */}
-        <div className="absolute top-0 bottom-0 w-1 bg-purple-500 left-[calc(33.333%-0.125rem)]" />
-        <div className="absolute top-0 bottom-0 w-1 bg-purple-500 left-[calc(66.666%-0.125rem)]" />
+          {/* Vertical lines */}
+          <div className="absolute top-0 bottom-0 w-1 bg-purple-500 left-[calc(33.333%-0.125rem)]" />
+          <div className="absolute top-0 bottom-0 w-1 bg-purple-500 left-[calc(66.666%-0.125rem)]" />
 
-        {Array.from({ length: 9 }, (_, i) => (
-          <Square
-            key={i}
-            value={squares[i]}
-            // Parent manages the square's state and 🆔. Square is more presentational.
-            onClick={() => handleClick(i)}
-          />
-        ))}
-      </div>
+          {Array.from({ length: 9 }, (_, i) => (
+            <Square
+              key={i}
+              value={squares[i]}
+              // Parent manages the square's state and 🆔. Square is more presentational.
+              onClick={() => handleClick(i)}
+            />
+          ))}
+        </div>
+
+        {/* Reset button */}
+        <button
+          onClick={handleReset}
+          disabled={!gameStarted}
+          className={`px-6 py-3 font-bold rounded-lg transition-colors duration-200 ${
+            gameStarted
+              ? "bg-purple-500 hover:bg-purple-600 text-white cursor-pointer"
+              : "bg-gray-500 text-gray-300 cursor-not-allowed"
+          }`}
+        >
+          {winner ? "Play Again" : "Restart"}
+        </button>
       </div>
     </main>
   );
