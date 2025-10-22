@@ -8,9 +8,8 @@ export default function App() {
 
   const hasGameStarted = squares.some((square) => square !== null);
 
-  const isTie = !winner && squares.every((square) => square !== null);
-
   const winner = calculateWinner(squares);
+  const isTie = !winner && squares.every((square) => square !== null);
 
   const handleClick = (index) => {
     if (squares[index] || winner) return; // Ignore click if square is already filled or game is won.
