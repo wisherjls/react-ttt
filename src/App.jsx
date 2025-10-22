@@ -7,6 +7,10 @@ export default function App() {
   const [turn, setTurn] = useState("X"); // "X" is first turn
   const [squares, setSquares] = useState(Array(9).fill(null));
 
+  const hasGameStarted = squares.some((square) => square !== null);
+
+  const isTie = !winner && squares.every((square) => square !== null);
+
   const winner = calculateWinner(squares);
 
   const handleClick = (index) => {
@@ -24,14 +28,19 @@ export default function App() {
     setTurn("X");
   };
 
-  const gameStarted = squares.some((square) => square !== null);
+  const getStatusMessage = () => {
+    if (winner) return `Winner: ${winner}! 🎉`;
+    if (isTie) return "It's a tie! 🤝";
+
+    return `Next player: ${turn}`;
+  };
 
   return (
     <main className="w-screen h-screen flex justify-center items-center bg-gray-900">
       <div className="flex flex-col items-center gap-6">
         {/* Status message */}
         <header className="text-3xl font-bold text-white">
-          {winner ? `Winner: ${winner}! 🎉` : `Next player: ${turn}`}
+          {getStatusMessage()}
         </header>
 
         <div className="relative grid grid-cols-3 w-fit gap-0">
@@ -56,14 +65,14 @@ export default function App() {
         {/* Reset button */}
         <button
           onClick={handleReset}
-          disabled={!gameStarted}
+          disabled={!hasGameStarted}
           className={`px-6 py-3 font-bold rounded-lg transition-colors duration-200 ${
-            gameStarted
+            hasGameStarted
               ? "bg-purple-500 hover:bg-purple-600 text-white cursor-pointer"
               : "bg-gray-500 text-gray-300 cursor-not-allowed"
           }`}
         >
-          {winner ? "Play Again" : "Restart"}
+          {winner || isTie ? "Play Again" : "Restart"}
         </button>
       </div>
     </main>
