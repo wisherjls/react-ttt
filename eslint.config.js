@@ -8,15 +8,12 @@ import globals from "globals";
 
 export default defineConfig([
   globalIgnores(["dist"]),
+  // Base recommended rules from ESLint
+  js.configs.recommended,
   {
     files: ["**/*.{js,jsx}"],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs["recommended-latest"],
-      reactRefresh.configs.vite,
-    ],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2024,
       globals: globals.browser,
       parserOptions: {
         ecmaVersion: "latest",
@@ -25,11 +22,16 @@ export default defineConfig([
       },
     },
     plugins: {
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
       import: importPlugin,
       perfectionist,
-      "use-encapsulation": eslintPluginUseEncapsulation,
     },
     rules: {
+      // Bring in only the rules from plugin presets (avoid eslintrc-style configs)
+      ...(reactHooks.configs["recommended-latest"]?.rules ?? {}),
+      ...(reactRefresh.configs.vite?.rules ?? {}),
+
       // Import rules
       "import/first": "error",
       "import/no-duplicates": "error",
