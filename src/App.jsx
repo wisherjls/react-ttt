@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import Square from "./components/square";
 import { calculateWinner } from "./lib";
 
 export default function App() {
@@ -76,5 +75,16 @@ export default function App() {
         </button>
       </div>
     </main>
+  );
+}
+
+function Square({ value, onClick }) {
+  return (
+    <button
+      className="text-9xl font-bold size-36 text-center text-white hover:bg-slate-700 transition-colors duration-200 cursor-pointer"
+      onClick={onClick}
+    >
+      {value}
+    </button>
   );
 }
