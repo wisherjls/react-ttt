@@ -39,6 +39,13 @@ export default defineConfig([
 
       "no-unused-vars": ["error", { varsIgnorePattern: "^[A-Z_]" }],
 
+      "no-use-before-define": [
+        "error",
+        {
+          functions: false,
+        },
+      ],
+
       "perfectionist/sort-imports": "error",
 
       "no-extra-boolean-cast": "error",
