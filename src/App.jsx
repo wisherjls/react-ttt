@@ -48,9 +48,9 @@ export default function App() {
 
   const handleReset = () => {
     // Play reset sound
-    if (resetSoundRef.current) {
-      resetSoundRef.current.currentTime = 0;
-      resetSoundRef.current.play();
+    if (resetSoundRef.current) { //check if ref is assigned
+      resetSoundRef.current.currentTime = 0; //reset to start
+      resetSoundRef.current.play(); //play sound
     }
     setSquares(Array(9).fill(null));
     setTurn("X");
@@ -60,9 +60,9 @@ export default function App() {
 
   // Play win sound when winner appears (side effect)
   useEffect(() => {
-    if (winner && winSoundRef.current) {
-      winSoundRef.current.currentTime = 0;
-      winSoundRef.current.play();
+    if (winner && winSoundRef.current) { // Check if there is a winner and ref is assigned
+      winSoundRef.current.currentTime = 0; //reset to start
+      winSoundRef.current.play(); //play sound
     }
     // Only run when winner changes
   }, [winner]);
@@ -220,3 +220,4 @@ function WinLine({ indices }) {
     </div>
   );
 }
+//the awnseres 1
